@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicHub - Agendamento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .booking-bg {
+            background: #141414;
+        }
+        .artist-header {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%);
+        }
+        .price-card {
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(40, 40, 40, 0.9) 100%);
+            border: 1px solid #333;
+        }
+        .flatpickr-day.selected, .flatpickr-day.selected:hover {
+            background: #e50914;
+            border-color: #e50914;
+        }
+        .flatpickr-day.inRange {
+            background: rgba(229, 9, 20, 0.2);
+            box-shadow: -5px 0 0 rgba(229, 9, 20, 0.2), 5px 0 0 rgba(229, 9, 20, 0.2);
+        }
+    </style>
+</head>
+<body class="booking-bg text-white">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-4 z-50 fixed w-full bg-gradient-to-b from-black to-transparent">
+        <div class="flex items-center">
+            <h1 class="text-red-600 font-bold text-3xl mr-10">MUSICHUB</h1>
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="#" class="hover:text-gray-300">Início</a></li>
+                <li><a href="#" class="hover:text-gray-300">Artistas</a></li>
+                <li><a href="#" class="hover:text-gray-300">Agendamentos</a></li>
+                <li><a href="#" class="hover:text-gray-300">Favoritos</a></li>
+            </ul>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="hidden md:flex items-center space-x-2">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Perfil" class="w-8 h-8 rounded-md">
+                <span>Olá, Rafael</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cabeçalho do Artista -->
+    <div class="pt-20 pb-10 px-4 sm:px-10 artist-header">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row items-start md:items-end">
+                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                     alt="Luna Santos" 
+                     class="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-white mb-4 md:mb-0 md:mr-6">
+                <div>
+                    <h2 class="text-3xl font-bold mb-2">Luna Santos</h2>
+                    <div class="flex items-center mb-4">
+                        <span class="bg-red-600 text-xs px-2 py-1 rounded mr-3">POP</span>
+                        <span class="text-gray-300 text-sm">4.9 ★ (128 avaliações)</span>
+                    </div>
+                    <p class="text-lg max-w-3xl">Cantora premiada com mais de 50 milhões de streams. Show energético com repertório próprio e covers especiais.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main class="py-8 px-4 sm:px-10">
+        <div class="container mx-auto">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Formulário de Agendamento -->
+                <div class="lg:w-2/3">
+                    <div class="bg-gray-900 rounded-xl p-6 mb-8">
+                        <h3 class="text-2xl font-bold mb-6">Solicitar Agendamento</h3>
+                        
+                        <!-- Passo 1: Seleção de Data -->
+                        <div class="mb-8">
+                            <h4 class="text-lg font-semibold mb-4 flex items-center">
+                                <span class="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center text-sm mr-2">1</span>
+                                Selecione as datas
+                            </h4>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-2">Período desejado</label>
+                                <input type="text" id="date-range" class="w-full bg-gray-800 border border-gray-700 rounded py-3 px-4 focus:outline-none focus:border-red-600" placeholder="Selecione um range de datas">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Horário de início</label>
+                                    <select class="w-full bg-gray-800 border border-gray-700 rounded py-3 px-4 focus:outline-none focus:border-red-600">
+                                        <option>18:00</option>
+                                        <option>19:00</option>
+                                        <option>20:00</option>
+                                        <option>21:00</option>
+                                        <option>22:00</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Duração</label>
+                                    <select class="w-full bg-gray-800 border border-gray-700 rounded py-3 px-4 focus:outline-none focus:border-red-600">
+                                        <option>1 hora</option>
+                                        <option>2 horas</option>
+                                        <option>3 horas</option>
+                                        <option>4 horas</option>
+                                        <option>Noite toda (5+ horas)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Passo 2: Detalhes do Evento -->
+                        <div class="mb-8">
+                            <h4 class="text-lg font-semibold mb-4 flex items-center">
+                                <span class="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center text-sm mr-2">2</span>
+                                Detalhes do evento
+                            </h4>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-2">Tipo de evento</label>
+                                <select class="w-full bg-gray-800 border border-gray-700 rounded py-3 px-4 focus:outline-none focus:border-red-600">
+                                    <option>Selecione...</option>
+                                    <option>Casamento</option>
+                                    <option>Aniversário</option>
+                                    <option>Evento Corporativo</option>
+                                    <option>Festa Privada</option>
+                                    <option>Bar/Restaurante</option>
+                                    <option>Outro</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-2">Local do evento</label>
+                                <input type="text" class="w-full bg-gray-800 border border-gray-700 rounded py-3 px-4 focus:outline-none focus:border-red-600" placeholder="Endereço completo">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Informações adicionais</label>
+                                <textarea class="w-full bg-gray-800 border border-gray-700 rounded py-3 px-4 focus:outline-none focus:border-red-600 h-24" placeholder="Detalhes sobre o evento, necessidades especiais, etc."></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Passo 3: Contato -->
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4 flex items-center">
+                                <span class="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center text-sm mr-2">3</span>
+                                Seus dados
+                            </h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Nome completo</label>
+                                    <input type="text" class="w-full bg-gray-800 border border-gray-700 rounded py-3 px-4 focus:outline-none focus:border-red-600" value="Rafael Silva">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Telefone</label>
+                                    <input type="tel" class="w-full bg-gray-800 border border-gray-700 rounded py-3 px-4 focus:outline-none focus:border-red-600" placeholder="(00) 00000-0000">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-2">Email</label>
+                                <input type="email" class="w-full bg-gray-800 border border-gray-700 rounded py-3 px-4 focus:outline-none focus:border-red-600" value="rafael@exemplo.com">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <button class="text-gray-300 hover:text-white flex items-center">
+                            <i class="fas fa-arrow-left mr-2"></i> Voltar para o perfil do artista
+                        </button>
+                        <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded transition duration-300">
+                            Solicitar Reserva
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Resumo e Preço -->
+                <div class="lg:w-1/3">
+                    <div class="price-card rounded-xl p-6 sticky top-24">
+                        <h3 class="text-xl font-bold mb-4">Resumo da Reserva</h3>
+                        
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400">Preço base:</span>
+                                <span class="font-medium">R$ 8.500,00</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400">Taxas:</span>
+                                <span class="font-medium">R$ 850,00</span>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-gray-700 pt-3 mt-3">
+                                <span class="font-medium">Total estimado:</span>
+                                <span class="text-xl font-bold">R$ 9.350,00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-2">Política de Cancelamento</h4>
+                            <p class="text-sm text-gray-400">Cancelamentos até 30 dias antes: reembolso de 100%<br>
+                            Cancelamentos até 15 dias antes: reembolso de 50%<br>
+                            Cancelamentos com menos de 15 dias: sem reembolso</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-2">O que está incluído</h4>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>Show de 2 horas (repertório combinado)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>Equipamento de som básico</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>1 técnico de som</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-times text-red-500 mr-2 mt-0.5"></i>
+                                    <span>Equipamento de iluminação (disponível por R$ 1.200 adicional)</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="flex items-center text-sm">
+                            <i class="fas fa-info-circle text-red-500 mr-2"></i>
+                            <span class="text-gray-400">O valor final será confirmado após análise da sua solicitação</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 px-10 border-t border-gray-800">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-red-600 font-bold text-xl mb-4">MUSICHUB</h4>
+                    <p class="text-gray-400">A plataforma líder para contratação de artistas musicais para todos os tipos de eventos.</p>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">NAVEGAÇÃO</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Início</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Artistas</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Agendamentos</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Favoritos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">SUPORTE</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Central de Ajuda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Termos de Uso</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Política de Privacidade</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contato</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">REDES SOCIAIS</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>© 2023 MusicHub. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+    <script>
+        // Configuração do date range picker
+        flatpickr("#date-range", {
+            mode: "range",
+            locale: "pt",
+            minDate: "today",
+            dateFormat: "d/m/Y",
+            showMonths: 2,
+            static: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                instance.element.value = "Selecione as datas";
+            }
+        });
+
+        // Validação do formulário
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Verifica se as datas foram selecionadas
+            const dateInput = document.getElementById('date-range');
+            if (!dateInput.value || dateInput.value === "Selecione as datas") {
+                alert('Por favor, selecione um range de datas para o evento');
+                dateInput.focus();
+                return;
+            }
+            
+            // Aqui você pode adicionar mais validações
+            
+            // Simulação de envio do formulário
+            alert('Solicitação de reserva enviada com sucesso! Entraremos em contato para confirmar os detalhes.');
+        });
+    </script>
+</body>
+</html>

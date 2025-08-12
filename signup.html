@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicHub - Cadastro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .register-bg {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 100%), 
+                        url('https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .input-field {
+            background-color: rgba(20, 20, 20, 0.8);
+            border: 1px solid #333;
+        }
+        .input-field:focus {
+            border-color: #e50914;
+        }
+        .select-field {
+            background-color: rgba(20, 20, 20, 0.8);
+            border: 1px solid #333;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em;
+        }
+        .artist-fields, .client-fields {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+    </style>
+    <script src="js/app.js"></script>
+</head>
+<body class="text-white">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-4 z-50 fixed w-full">
+        <h1 class="text-red-600 font-bold text-3xl">MUSICHUB</h1>
+        <a href="login.html" class="text-gray-300 hover:text-white">Já tem conta? <span class="text-red-400">Entrar</span></a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="min-h-screen flex items-center justify-center register-bg py-16">
+        <div class="max-w-md w-full mx-4 bg-black bg-opacity-80 rounded-lg overflow-hidden shadow-2xl">
+            <!-- Header do Formulário -->
+            <div class="p-8 text-center">
+                <h2 class="text-3xl font-bold mb-2">Crie sua conta</h2>
+                <p class="text-gray-400">Faça parte da maior plataforma de conexão musical</p>
+            </div>
+
+            <!-- Formulário de Cadastro -->
+            <form id="register-form" class="px-8 pb-8">
+                <div class="mb-6">
+                    <label for="user-type" class="block text-sm font-medium mb-2">Você é:</label>
+                    <select required id="user-type" class="w-full select-field rounded py-3 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 text-white pr-10">
+                        <option value="client">Cliente (quero contratar artistas)</option>
+                        <option value="artist">Artista (quero me apresentar)</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium mb-2">Nome Completo*</label>
+                        <input  type="text" id="name" class="w-full input-field rounded py-3 px-4 focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="Seu nome" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium mb-2">Email*</label>
+                        <input type="email" id="email" class="w-full input-field rounded py-3 px-4 focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="seu@email.com" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="password" class="block text-sm font-medium mb-2">Senha*</label>
+                        <input type="password" id="password" class="w-full input-field rounded py-3 px-4 focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="••••••••" required>
+                    </div>
+                    <div>
+                        <label for="confirm-password" class="block text-sm font-medium mb-2">Confirme a Senha*</label>
+                        <input type="password" id="confirm-password" class="w-full input-field rounded py-3 px-4 focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="••••••••" required>
+                    </div>
+                </div>
+                <!-- Campos específicos para Cliente -->
+                <div class="flex items-center mb-8">
+                    <input id="terms" type="checkbox" class="w-4 h-4 rounded bg-gray-700 border-gray-600 focus:ring-red-600" required>
+                    <label for="terms" class="ml-2 text-sm">Eu concordo com os <a href="#" class="text-red-400 hover:underline">Termos de Serviço</a> e <a href="#" class="text-red-400 hover:underline">Política de Privacidade</a>*</label>
+                </div>
+
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded transition duration-300 mb-4">
+                    Criar Conta
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 px-10 border-t border-gray-800">
+        <div class="container mx-auto text-center text-gray-500 text-sm">
+            <p>© 2023 MusicHub. Todos os direitos reservados.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="#" class="hover:text-gray-300">Termos de Uso</a>
+                <a href="#" class="hover:text-gray-300">Privacidade</a>
+                <a href="#" class="hover:text-gray-300">Cookies</a>
+                <a href="#" class="hover:text-gray-300">Contato</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mostra/oculta campos específicos conforme seleção
+        const userTypeSelect = document.getElementById('user-type');
+        const artistFields = document.getElementById('artist-fields');
+        const clientFields = document.getElementById('client-fields');
+
+        userTypeSelect.addEventListener('change', function() {
+            if(this.value === 'artist') {
+                artistFields.classList.remove('hidden');
+                clientFields.classList.add('hidden');
+            } else {
+                artistFields.classList.add('hidden');
+                clientFields.classList.remove('hidden');
+            }
+        });
+
+        // Validação básica de senha
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm-password');
+
+        confirmPassword.addEventListener('input', function() {
+            if(password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity("As senhas não coincidem");
+            } else {
+                confirmPassword.setCustomValidity("");
+            }
+        });
+
+        // Prevenir envio do formulário se as senhas não coincidirem
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            
+                event.preventDefault();
+                register();
+        
+        });
+    </script>
+</body>
+</html>

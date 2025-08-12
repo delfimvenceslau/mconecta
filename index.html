@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicHub - Contrate os melhores artistas musicais</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hero-image {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%);
+        }
+
+        .carousel-item {
+            transition: transform 0.5s ease;
+        }
+
+        .artist-card:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .genre-tag {
+            transition: all 0.3s ease;
+        }
+
+        .genre-tag:hover {
+            background-color: #e50914;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-4 z-50 fixed w-full bg-gradient-to-b from-black to-transparent">
+        <!-- Logo e Menu Hambúrguer -->
+        <div class="flex items-center">
+            <h1 class="text-red-600 font-bold text-2xl md:text-3xl">MUSICHUB</h1>
+
+            <!-- Menu Hambúrguer (mobile) -->
+            <button id="menu-toggle" class="md:hidden ml-4 text-white focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+
+            <!-- Menu Desktop -->
+            <ul class="hidden md:flex space-x-6 ml-10">
+                <li><a href="#" class="hover:text-gray-300">Início</a></li>
+                <li><a href="#" class="hover:text-gray-300">Artistas</a></li>
+                <li><a href="#" class="hover:text-gray-300">Gêneros</a></li>
+                <li><a href="#" class="hover:text-gray-300">Shows</a></li>
+            </ul>
+        </div>
+
+        <!-- Itens do lado direito -->
+        <div class="flex items-center space-x-4">
+            <!-- Campo de busca (oculto em mobile por padrão) -->
+            <div class="hidden md:block relative">
+                <input type="text" placeholder="Buscar artistas..."
+                    class="bg-black bg-opacity-70 border border-gray-700 rounded px-4 py-1 focus:outline-none focus:border-white w-40 lg:w-64">
+                <i class="fas fa-search absolute right-3 top-2 text-gray-400"></i>
+            </div>
+
+            <!-- Ícone de busca (mobile) -->
+            <button id="search-toggle" class="md:hidden text-white">
+                <i class="fas fa-search text-xl"></i>
+            </button>
+
+            <!-- Botão Entrar -->
+            <button onclick="location.href='login.html'" class="bg-red-600 px-3 py-1 md:px-4 rounded hover:bg-red-700 text-sm md:text-base">
+                ENTRAR
+            </button>
+        </div>
+
+        <!-- Menu Mobile (dropdown) -->
+        <div id="mobile-menu" class="hidden absolute top-16 left-0 right-0 bg-black bg-opacity-95 py-4 px-6">
+            <ul class="space-y-4">
+                <li><a href="#" class="block hover:text-gray-300 text-lg">Início</a></li>
+                <li><a href="#" class="block hover:text-gray-300 text-lg">Artistas</a></li>
+                <li><a href="#" class="block hover:text-gray-300 text-lg">Gêneros</a></li>
+                <li><a href="#" class="block hover:text-gray-300 text-lg">Shows</a></li>
+            </ul>
+        </div>
+
+        <!-- Busca Mobile (dropdown) -->
+        <div id="mobile-search" class="hidden absolute top-16 left-0 right-0 bg-black bg-opacity-95 py-4 px-6">
+            <div class="relative">
+                <input type="text" placeholder="Buscar artistas..."
+                    class="bg-gray-900 border border-gray-700 rounded px-4 py-2 focus:outline-none focus:border-white w-full">
+                <i class="fas fa-search absolute right-6 top-3 text-gray-400"></i>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Controle do menu mobile
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const searchToggle = document.getElementById('search-toggle');
+        const mobileSearch = document.getElementById('mobile-search');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileSearch.classList.add('hidden');
+        });
+
+        searchToggle.addEventListener('click', () => {
+            mobileSearch.classList.toggle('hidden');
+            mobileMenu.classList.add('hidden');
+        });
+
+        // Fecha os menus ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#menu-toggle') && !e.target.closest('#mobile-menu')) {
+                mobileMenu.classList.add('hidden');
+            }
+            if (!e.target.closest('#search-toggle') && !e.target.closest('#mobile-search')) {
+                mobileSearch.classList.add('hidden');
+            }
+        });
+    </script>
+
+    <!-- Hero Section - Artista em Destaque -->
+    <section class="relative h-screen">
+        <div class="absolute inset-0 hero-image flex items-end pb-20">
+            <div class="container mx-auto px-10">
+                <h2 class="text-5xl font-bold mb-4">LUA SANTANA</h2>
+                <div class="flex mb-4 space-x-3">
+                    <span class="genre-tag bg-gray-800 px-3 py-1 rounded-full text-sm cursor-pointer">POP</span>
+                    <span class="genre-tag bg-gray-800 px-3 py-1 rounded-full text-sm cursor-pointer">MPB</span>
+                    <span class="genre-tag bg-gray-800 px-3 py-1 rounded-full text-sm cursor-pointer">ELETRÔNICO</span>
+                </div>
+                <p class="text-xl max-w-2xl mb-6">Artista premiada com mais de 10 milhões de streams. Disponível para
+                    shows privados, festivais e eventos corporativos.</p>
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                    <!-- Botão Primário (mobile: full width) -->
+                    <button
+                        class="bg-white text-black px-4 sm:px-6 py-2 rounded flex items-center justify-center hover:bg-opacity-80 w-full sm:w-auto">
+                        <i class="fas fa-play mr-2"></i>
+                        <span class="text-sm sm:text-base">Ver Performance</span>
+                    </button>
+
+                    <!-- Botão Secundário (mobile: full width) -->
+                    <button
+                        class="bg-gray-600 bg-opacity-70 px-4 sm:px-6 py-2 rounded flex items-center justify-center hover:bg-opacity-50 w-full sm:w-auto">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <span class="text-sm sm:text-base">Ver Disponibilidade</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            alt="Artista musical em destaque" class="w-full h-full object-cover">
+    </section>
+
+    <!-- Seção de Artistas -->
+    <section class="py-16 px-10 mt-10">
+        <div class="container mx-auto">
+            <h3 class="text-2xl font-bold mb-6">Artistas em Alta</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <!-- Artista 1 -->
+                <div class="artist-card relative rounded overflow-hidden transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                        alt="DJ Renato" class="w-full h-64 object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h4 class="font-bold">DJ RENATO</h4>
+                        <p class="text-sm text-gray-300">Eletrônico • House</p>
+                    </div>
+                </div>
+
+                <!-- Artista 2 -->
+                <div class="artist-card relative rounded overflow-hidden transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
+                        alt="Banda Sol" class="w-full h-64 object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h4 class="font-bold">BANDA SOL</h4>
+                        <p class="text-sm text-gray-300">Rock • Indie</p>
+                    </div>
+                </div>
+
+                <!-- Artista 3 -->
+                <div class="artist-card relative rounded overflow-hidden transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                        alt="MC Túlio" class="w-full h-64 object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h4 class="font-bold">MC TÚLIO</h4>
+                        <p class="text-sm text-gray-300">Funk • Trap</p>
+                    </div>
+                </div>
+
+                <!-- Artista 4 -->
+                <div class="artist-card relative rounded overflow-hidden transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                        alt="Ana Jazz" class="w-full h-64 object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h4 class="font-bold">ANA JAZZ</h4>
+                        <p class="text-sm text-gray-300">Jazz • Bossa Nova</p>
+                    </div>
+                </div>
+
+                <!-- Artista 5 -->
+                <div class="artist-card relative rounded overflow-hidden transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                        alt="Duo Sertanejo" class="w-full h-64 object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h4 class="font-bold">DUO SERTANEJO</h4>
+                        <p class="text-sm text-gray-300">Sertanejo</p>
+                    </div>
+                </div>
+
+                <!-- Artista 6 -->
+                <div class="artist-card relative rounded overflow-hidden transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                        alt="Orquestra Filarmônica" class="w-full h-64 object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h4 class="font-bold">ORQUESTRA SP</h4>
+                        <p class="text-sm text-gray-300">Clássico • Erudito</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção por Gêneros -->
+    <section class="py-16 px-4 sm:px-10 ">
+        <div class="container mx-auto">
+            <h3 class="text-2xl font-bold mb-6">Explore por Gênero</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+                <!-- Card Rock -->
+                <div
+                    class="genre-card relative rounded-lg overflow-hidden h-48 sm:h-64 group cursor-pointer transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                        alt="Show de Rock"
+                        class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-4">
+                        <h4 class="font-bold text-lg sm:text-xl">ROCK</h4>
+                        <p class="text-sm text-gray-300">32 artistas</p>
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-20 transition duration-300">
+                    </div>
+                </div>
+
+                <!-- Card Eletrônico -->
+                <div
+                    class="genre-card relative rounded-lg overflow-hidden h-48 sm:h-64 group cursor-pointer transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                        alt="Festival Eletrônico"
+                        class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-4">
+                        <h4 class="font-bold text-lg sm:text-xl">ELETRÔNICO</h4>
+                        <p class="text-sm text-gray-300">28 artistas</p>
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-blue-900 bg-opacity-40 group-hover:bg-opacity-20 transition duration-300">
+                    </div>
+                </div>
+
+                <!-- Card Sertanejo -->
+                <div
+                    class="genre-card relative rounded-lg overflow-hidden h-48 sm:h-64 group cursor-pointer transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1496293455970-f8581aae0e3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2013&q=80"
+                        alt="Show Sertanejo"
+                        class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-4">
+                        <h4 class="font-bold text-lg sm:text-xl">SERTANEJO</h4>
+                        <p class="text-sm text-gray-300">45 artistas</p>
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-yellow-900 bg-opacity-40 group-hover:bg-opacity-20 transition duration-300">
+                    </div>
+                </div>
+
+                <!-- Card Hip Hop -->
+                <div
+                    class="genre-card relative rounded-lg overflow-hidden h-48 sm:h-64 group cursor-pointer transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                        alt="Show de Hip Hop"
+                        class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-4">
+                        <h4 class="font-bold text-lg sm:text-xl">HIP HOP</h4>
+                        <p class="text-sm text-gray-300">39 artistas</p>
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-green-900 bg-opacity-40 group-hover:bg-opacity-20 transition duration-300">
+                    </div>
+                </div>
+
+                <!-- Card MPB -->
+                <div
+                    class="genre-card relative rounded-lg overflow-hidden h-48 sm:h-64 group cursor-pointer transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
+                        alt="Show de MPB"
+                        class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-4">
+                        <h4 class="font-bold text-lg sm:text-xl">MPB</h4>
+                        <p class="text-sm text-gray-300">27 artistas</p>
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-purple-900 bg-opacity-40 group-hover:bg-opacity-20 transition duration-300">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Shows Recentes -->
+    <section class="py-16 px-4 sm:px-10 ">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h3
+                    class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-purple-600">
+                    Por que contratar artistas pela nossa plataforma?</h3>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">Conectamos você aos melhores talentos musicais com
+                    segurança, praticidade e excelência</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Benefício 1 -->
+                <div
+                    class="benefit-card group relative rounded-xl overflow-hidden border border-gray-700 hover:border-red-500 transition-all duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-br from-black to-gray-900 opacity-90"></div>
+                    <div class="relative z-10 p-6 h-full flex flex-col">
+                        <div class="w-14 h-14 mb-4 rounded-full bg-red-600 flex items-center justify-center text-2xl">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Segurança Garantida</h4>
+                        <p class="text-gray-300 mb-6 flex-grow">Todos os artistas são verificados e com contrato
+                            protegido. Pagamento seguro com reembolso em caso de cancelamento.</p>
+                        <div
+                            class="bg-gray-800 bg-opacity-50 -mx-6 -mb-6 p-6 group-hover:bg-red-900 group-hover:bg-opacity-20 transition">
+                            <button class="text-red-400 hover:text-red-300 font-medium flex items-center">
+                                Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benefício 2 -->
+                <div
+                    class="benefit-card group relative rounded-xl overflow-hidden border border-gray-700 hover:border-blue-500 transition-all duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-br from-black to-gray-900 opacity-90"></div>
+                    <div class="relative z-10 p-6 h-full flex flex-col">
+                        <div class="w-14 h-14 mb-4 rounded-full bg-blue-600 flex items-center justify-center text-2xl">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Qualidade Premium</h4>
+                        <p class="text-gray-300 mb-6 flex-grow">Curadoria dos melhores artistas com avaliações reais.
+                            Garantia de profissionalismo e alto nível artístico.</p>
+                        <div
+                            class="bg-gray-800 bg-opacity-50 -mx-6 -mb-6 p-6 group-hover:bg-blue-900 group-hover:bg-opacity-20 transition">
+                            <button class="text-blue-400 hover:text-blue-300 font-medium flex items-center">
+                                Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benefício 3 -->
+                <div
+                    class="benefit-card group relative rounded-xl overflow-hidden border border-gray-700 hover:border-purple-500 transition-all duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-br from-black to-gray-900 opacity-90"></div>
+                    <div class="relative z-10 p-6 h-full flex flex-col">
+                        <div
+                            class="w-14 h-14 mb-4 rounded-full bg-purple-600 flex items-center justify-center text-2xl">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Processo Facilitado</h4>
+                        <p class="text-gray-300 mb-6 flex-grow">Contrate em poucos cliques, com suporte especializado em
+                            todas as etapas. Tudo online, sem burocracia.</p>
+                        <div
+                            class="bg-gray-800 bg-opacity-50 -mx-6 -mb-6 p-6 group-hover:bg-purple-900 group-hover:bg-opacity-20 transition">
+                            <button class="text-purple-400 hover:text-purple-300 font-medium flex items-center">
+                                Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benefício 4 -->
+                <div
+                    class="benefit-card group relative rounded-xl overflow-hidden border border-gray-700 hover:border-yellow-500 transition-all duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-br from-black to-gray-900 opacity-90"></div>
+                    <div class="relative z-10 p-6 h-full flex flex-col">
+                        <div
+                            class="w-14 h-14 mb-4 rounded-full bg-yellow-600 flex items-center justify-center text-2xl">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Melhor Custo-Benefício</h4>
+                        <p class="text-gray-300 mb-6 flex-grow">Preços competitivos sem intermediários. Negocie
+                            diretamente com os artistas e economize até 30%.</p>
+                        <div
+                            class="bg-gray-800 bg-opacity-50 -mx-6 -mb-6 p-6 group-hover:bg-yellow-900 group-hover:bg-opacity-20 transition">
+                            <button class="text-yellow-400 hover:text-yellow-300 font-medium flex items-center">
+                                Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benefício 5 -->
+                <div
+                    class="benefit-card group relative rounded-xl overflow-hidden border border-gray-700 hover:border-green-500 transition-all duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-br from-black to-gray-900 opacity-90"></div>
+                    <div class="relative z-10 p-6 h-full flex flex-col">
+                        <div class="w-14 h-14 mb-4 rounded-full bg-green-600 flex items-center justify-center text-2xl">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Suporte 24/7</h4>
+                        <p class="text-gray-300 mb-6 flex-grow">Equipe disponível para ajudar em qualquer etapa, da
+                            contratação à realização do evento.</p>
+                        <div
+                            class="bg-gray-800 bg-opacity-50 -mx-6 -mb-6 p-6 group-hover:bg-green-900 group-hover:bg-opacity-20 transition">
+                            <button class="text-green-400 hover:text-green-300 font-medium flex items-center">
+                                Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benefício 6 -->
+                <div
+                    class="benefit-card group relative rounded-xl overflow-hidden border border-gray-700 hover:border-pink-500 transition-all duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-br from-black to-gray-900 opacity-90"></div>
+                    <div class="relative z-10 p-6 h-full flex flex-col">
+                        <div class="w-14 h-14 mb-4 rounded-full bg-pink-600 flex items-center justify-center text-2xl">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Experiência Exclusiva</h4>
+                        <p class="text-gray-300 mb-6 flex-grow">Acesso a artistas exclusivos e pacotes personalizados
+                            para tornar seu evento único e memorável.</p>
+                        <div
+                            class="bg-gray-800 bg-opacity-50 -mx-6 -mb-6 p-6 group-hover:bg-pink-900 group-hover:bg-opacity-20 transition">
+                            <button class="text-pink-400 hover:text-pink-300 font-medium flex items-center">
+                                Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center">
+                <button
+                    class="bg-gradient-to-r from-red-600 to-purple-600 px-8 py-3 rounded-full font-bold hover:opacity-90 transition shadow-lg shadow-red-900/30">
+                    Quero contratar um artista agora
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-black py-12 px-10 border-t border-gray-800">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-red-600 font-bold text-xl mb-4">MUSICHUB</h4>
+                    <p class="text-gray-400">A plataforma líder para contratação de artistas musicais para todos os
+                        tipos de eventos.</p>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">NAVEGAÇÃO</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Início</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Artistas</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Gêneros</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Shows</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">SUPORTE</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Central de Ajuda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Termos de Uso</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Política de Privacidade</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contato</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">REDES SOCIAIS</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                    <div class="mt-6">
+                        <button class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 w-full">CADASTRE-SE GRÁTIS</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>© 2023 MusicHub. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simples efeito de hover para os cards
+        document.querySelectorAll('.artist-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('img').style.transform = 'scale(1.1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('img').style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+
+</html>

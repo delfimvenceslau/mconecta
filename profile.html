@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna Santos | MusicHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-bg {
+            background: #141414;
+        }
+        .artist-header {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%);
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-button.active {
+            border-bottom-color: #e50914;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .gallery-item {
+            transition: all 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.03);
+            z-index: 10;
+        }
+        .availability-day.available {
+            background-color: rgba(0, 200, 83, 0.2);
+            color: #00C853;
+        }
+        .availability-day.unavailable {
+            background-color: rgba(229, 9, 20, 0.2);
+            color: #E50914;
+        }
+    </style>
+</head>
+<body class="profile-bg text-white">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-4 z-50 fixed w-full bg-gradient-to-b from-black to-transparent">
+        <div class="flex items-center">
+            <h1 class="text-red-600 font-bold text-3xl mr-10">MUSICHUB</h1>
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="#" class="hover:text-gray-300">Início</a></li>
+                <li><a href="#" class="hover:text-gray-300">Artistas</a></li>
+                <li><a href="#" class="hover:text-gray-300">Contratações</a></li>
+                <li><a href="#" class="hover:text-gray-300">Favoritos</a></li>
+            </ul>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="relative hidden md:block">
+                <input type="text" placeholder="Buscar artistas..." class="bg-black bg-opacity-70 border border-gray-700 rounded px-4 py-1 focus:outline-none focus:border-white w-40 lg:w-64">
+                <i class="fas fa-search absolute right-3 top-2 text-gray-400"></i>
+            </div>
+            <div class="flex items-center space-x-2">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Perfil" class="w-8 h-8 rounded-md">
+                <span class="hidden md:inline">Olá, Rafael</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cabeçalho do Artista -->
+    <div class="pt-20 pb-10 px-4 sm:px-10 artist-header">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row items-start md:items-end">
+                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                     alt="Luna Santos" 
+                     class="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-white mb-4 md:mb-0 md:mr-6">
+                <div class="flex-1">
+                    <div class="flex flex-col md:flex-row md:items-end md:justify-between">
+                        <div>
+                            <h2 class="text-3xl font-bold mb-2">Luna Santos</h2>
+                            <div class="flex items-center mb-4">
+                                <span class="bg-red-600 text-xs px-2 py-1 rounded mr-3">POP</span>
+                                <span class="text-gray-300 text-sm mr-3">São Paulo, SP</span>
+                                <span class="text-gray-300 text-sm">4.9 ★ (128 avaliações)</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3 mb-4 md:mb-0">
+                            <button class="bg-red-600 hover:bg-red-700 px-6 py-2 rounded flex items-center">
+                                <i class="fas fa-calendar-alt mr-2"></i> Contratar
+                            </button>
+                            <button class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-full">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-full">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 border-b border-gray-700 mt-4">
+                        <button class="tab-button active pb-3 px-1 text-gray-400" data-tab="sobre">Sobre</button>
+                        <button class="tab-button pb-3 px-1 text-gray-400" data-tab="galeria">Fotos/Vídeos</button>
+                        <button class="tab-button pb-3 px-1 text-gray-400" data-tab="avaliacoes">Avaliações</button>
+                        <button class="tab-button pb-3 px-1 text-gray-400" data-tab="agenda">Agenda</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main class="py-8 px-4 sm:px-10">
+        <div class="container mx-auto">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Conteúdo Principal -->
+                <div class="lg:w-2/3">
+                    <!-- Seção Sobre -->
+                    <section id="sobre" class="tab-content active mb-12">
+                        <h3 class="text-2xl font-bold mb-4">Sobre Luna Santos</h3>
+                        <p class="text-gray-300 mb-6">Cantora e compositora paulistana com mais de 50 milhões de streams em suas músicas. Luna traz um show energético que mistura seu repertório autoral com versões especiais de sucessos do POP nacional e internacional.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div>
+                                <h4 class="font-semibold mb-2 flex items-center">
+                                    <i class="fas fa-music text-red-500 mr-2"></i>
+                                    Estilo Musical
+                                </h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-gray-800 px-3 py-1 rounded-full text-sm">POP</span>
+                                    <span class="bg-gray-800 px-3 py-1 rounded-full text-sm">MPB</span>
+                                    <span class="bg-gray-800 px-3 py-1 rounded-full text-sm">R&B</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2 flex items-center">
+                                    <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
+                                    Atuação
+                                </h4>
+                                <p class="text-gray-300">Todo Brasil (viagens inclusas no preço para eventos acima de R$ 10.000)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2 flex items-center">
+                                    <i class="fas fa-dollar-sign text-red-500 mr-2"></i>
+                                    Faixa de Preço
+                                </h4>
+                                <p class="text-gray-300">R$ 5.000 - R$ 15.000 (varia conforme localização e duração)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2 flex items-center">
+                                    <i class="fas fa-users text-red-500 mr-2"></i>
+                                    Formação
+                                </h4>
+                                <p class="text-gray-300">Solo (com playback) ou banda completa (4 músicos)</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="font-semibold mb-2">Descrição do Show</h4>
+                        <p class="text-gray-300 mb-4">Show com duração de 60 a 120 minutos, incluindo:</p>
+                        <ul class="text-gray-300 space-y-2 mb-6 list-disc list-inside">
+                            <li>Repertório autoral (10 músicas)</li>
+                            <li>Covers especiais de artistas como Anitta, Ludmilla e Dua Lipa</li>
+                            <li>Interação com o público</li>
+                            <li>Equipamento de som básico incluído</li>
+                            <li>1 técnico de som</li>
+                        </ul>
+                        
+                        <h4 class="font-semibold mb-2">Requisitos Técnicos</h4>
+                        <ul class="text-gray-300 space-y-2 list-disc list-inside">
+                            <li>Palco mínimo de 4x3 metros</li>
+                            <li>Tomadas 220V próximas ao palco</li>
+                            <li>Espaço para camarim (para shows com banda)</li>
+                            <li>Estacionamento para 1 carro (solo) ou 2 carros (banda)</li>
+                        </ul>
+                    </section>
+                    
+                    <!-- Seção Fotos/Vídeos -->
+                    <section id="galeria" class="tab-content mb-12">
+                        <h3 class="text-2xl font-bold mb-6">Galeria</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <div class="gallery-item rounded-lg overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                                     alt="Luna Santos show" 
+                                     class="w-full h-48 object-cover">
+                            </div>
+                            <div class="gallery-item rounded-lg overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                                     alt="Luna Santos palco" 
+                                     class="w-full h-48 object-cover">
+                            </div>
+                            <div class="gallery-item rounded-lg overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                                     alt="Luna Santos show" 
+                                     class="w-full h-48 object-cover">
+                            </div>
+                            <div class="gallery-item rounded-lg overflow-hidden">
+                                <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
+                                    <i class="fas fa-play text-4xl text-red-500"></i>
+                                </div>
+                            </div>
+                            <div class="gallery-item rounded-lg overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                                     alt="Luna Santos ensaio" 
+                                     class="w-full h-48 object-cover">
+                            </div>
+                            <div class="gallery-item rounded-lg overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" 
+                                     alt="Luna Santos acústico" 
+                                     class="w-full h-48 object-cover">
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Seção Avaliações -->
+                    <section id="avaliacoes" class="tab-content mb-12">
+                        <h3 class="text-2xl font-bold mb-6">Avaliações <span class="text-gray-400 text-lg">(128)</span></h3>
+                        
+                        <div class="bg-gray-900 rounded-lg p-6 mb-6">
+                            <div class="flex items-center mb-4">
+                                <div class="flex items-center mr-4">
+                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                    <span class="font-bold">4.9</span>
+                                    <span class="text-gray-400 text-sm ml-1">(128 avaliações)</span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center">
+                                        <span class="text-sm w-10">5★</span>
+                                        <div class="flex-1 bg-gray-700 rounded-full h-2 mx-2">
+                                            <div class="bg-yellow-400 h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <span class="text-sm text-gray-400">108</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="text-sm w-10">4★</span>
+                                        <div class="flex-1 bg-gray-700 rounded-full h-2 mx-2">
+                                            <div class="bg-yellow-400 h-2 rounded-full" style="width: 10%"></div>
+                                        </div>
+                                        <span class="text-sm text-gray-400">13</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="text-sm w-10">3★</span>
+                                        <div class="flex-1 bg-gray-700 rounded-full h-2 mx-2">
+                                            <div class="bg-yellow-400 h-2 rounded-full" style="width: 3%"></div>
+                                        </div>
+                                        <span class="text-sm text-gray-400">4</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="text-sm w-10">2★</span>
+                                        <div class="flex-1 bg-gray-700 rounded-full h-2 mx-2">
+                                            <div class="bg-yellow-400 h-2 rounded-full" style="width: 1%"></div>
+                                        </div>
+                                        <span class="text-sm text-gray-400">2</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="text-sm w-10">1★</span>
+                                        <div class="flex-1 bg-gray-700 rounded-full h-2 mx-2">
+                                            <div class="bg-yellow-400 h-2 rounded-full" style="width: 1%"></div>
+                                        </div>
+                                        <span class="text-sm text-gray-400">1</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded text-sm">
+                                Escrever avaliação
+                            </button>
+                        </div>
+                        
+                        <!-- Avaliação 1 -->
+                        <div class="bg-gray-900 rounded-lg p-6 mb-4">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h4 class="font-bold">Ana Carolina</h4>
+                                    <div class="flex items-center text-sm text-gray-400">
+                                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                        <i class="fas fa-star text-yellow-400 mr-2"></i>
+                                        <span>Casamento • 15/03/2023</span>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500">3 meses atrás</span>
+                            </div>
+                            <p class="text-gray-300">Luna foi sensacional no meu casamento! Todos os convidados elogiaram muito o show. Ela tem uma voz incrível e um repertório perfeito para celebrar o amor. Super profissional e atenciosa.</p>
+                        </div>
+                        
+                        <!-- Avaliação 2 -->
+                        <div class="bg-gray-900 rounded-lg p-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h4 class="font-bold">Ricardo Almeida</h4>
+                                    <div class="flex items-center text-sm text-gray-400">
+                                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                        <i class="fas fa-star text-yellow-400 mr-2"></i>
+                                        <span>Aniversário • 02/05/2023</span>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-gray-500">1 mês atrás</span>
+                            </div>
+                            <p class="text-gray-300">Contratamos Luna para o aniversário de 15 anos da minha filha e foi o maior sucesso! As adolescentes amaram o show, ela interagiu muito com a galera e fez covers perfeitos das músicas que a turma gosta. Valeu cada centavo!</p>
+                        </div>
+                    </section>
+
+                    <!-- Seção Agenda -->
+                    <section id="agenda" class="tab-content mb-12">
+                        <h3 class="text-2xl font-bold mb-6">Agenda de Disponibilidade</h3>
+                        
+                        <div class="bg-gray-900 rounded-lg p-6 mb-6">
+                            <h4 class="font-semibold mb-4">Próximos 3 Meses</h4>
+                            
+                            <div class="grid grid-cols-7 gap-1 mb-4">
+                                <div class="text-center text-xs text-gray-400">D</div>
+                                <div class="text-center text-xs text-gray-400">S</div>
+                                <div class="text-center text-xs text-gray-400">T</div>
+                                <div class="text-center text-xs text-gray-400">Q</div>
+                                <div class="text-center text-xs text-gray-400">Q</div>
+                                <div class="text-center text-xs text-gray-400">S</div>
+                                <div class="text-center text-xs text-gray-400">S</div>
+                            </div>
+                            
+                            <div class="grid grid-cols-7 gap-1">
+                                <!-- Dias do mês -->
+                                <div class="text-center text-sm py-1 text-gray-500">28</div>
+                                <div class="text-center text-sm py-1 text-gray-500">29</div>
+                                <div class="text-center text-sm py-1 text-gray-500">30</div>
+                                <div class="text-center text-sm py-1 text-gray-500">31</div>
+                                <div class="text-center text-sm py-1 availability-day available">1</div>
+                                <div class="text-center text-sm py-1 availability-day available">2</div>
+                                <div class="text-center text-sm py-1 availability-day available">3</div>
+                                <!-- Continuação dos dias... -->
+                                <div class="text-center text-sm py-1 availability-day available">4</div>
+                                <div class="text-center text-sm py-1 availability-day available">5</div>
+                                <div class="text-center text-sm py-1 availability-day unavailable">6</div>
+                                <div class="text-center text-sm py-1 availability-day unavailable">7</div>
+                                <div class="text-center text-sm py-1 availability-day available">8</div>
+                                <div class="text-center text-sm py-1 availability-day available">9</div>
+                                <div class="text-center text-sm py-1 availability-day available">10</div>
+                                <!-- Mais dias... -->
+                            </div>
+                            
+                            <div class="flex items-center justify-center mt-4 text-sm">
+                                <span class="availability-day available px-2 py-1 mr-3"></span>
+                                <span class="text-gray-400 mr-4">Disponível</span>
+                                <span class="availability-day unavailable px-2 py-1 mr-3"></span>
+                                <span class="text-gray-400">Indisponível</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-900 rounded-lg p-6">
+                            <h4 class="font-semibold mb-4">Próximos Eventos Confirmados</h4>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <div class="bg-red-600 rounded-lg p-2 mr-4 text-center min-w-[60px]">
+                                        <div class="font-bold text-lg">15</div>
+                                        <div class="text-xs">JUN</div>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-medium">Casamento Silva</h5>
+                                        <p class="text-sm text-gray-400">São Paulo, SP • 20:00 - 22:00</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-red-600 rounded-lg p-2 mr-4 text-center min-w-[60px]">
+                                        <div class="font-bold text-lg">22</div>
+                                        <div class="text-xs">JUN</div>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-medium">Festa de Aniversário</h5>
+                                        <p class="text-sm text-gray-400">Rio de Janeiro, RJ • 19:00 - 21:00</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-red-600 rounded-lg p-2 mr-4 text-center min-w-[60px]">
+                                        <div class="font-bold text-lg">30</div>
+                                        <div class="text-xs">JUN</div>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-medium">Evento Corporativo</h5>
+                                        <p class="text-sm text-gray-400">Belo Horizonte, MG • 18:30 - 20:30</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Sidebar -->
+                <div class="lg:w-1/3">
+                    <!-- Card de Contratação -->
+                    <div class="bg-gray-900 rounded-xl p-6 mb-6 sticky top-24">
+                        <h3 class="text-xl font-bold mb-4">Contratar Luna Santos</h3>
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400">Preço base:</span>
+                                <span class="font-medium">R$ 8.500,00</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400">Formação:</span>
+                                <select class="bg-gray-800 border border-gray-700 rounded py-1 px-2 text-sm focus:outline-none focus:border-red-600">
+                                    <option>Solo (playback)</option>
+                                    <option>Banda completa (+R$ 3.000)</option>
+                                </select>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400">Duração:</span>
+                                <select class="bg-gray-800 border border-gray-700 rounded py-1 px-2 text-sm focus:outline-none focus:border-red-600">
+                                    <option>1 hora</option>
+                                    <option>2 horas (+R$ 1.500)</option>
+                                    <option>3 horas (+R$ 3.000)</option>
+                                </select>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-gray-700 pt-3 mt-3">
+                                <span class="font-medium">Total estimado:</span>
+                                <span class="text-xl font-bold">R$ 8.500,00</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded transition duration-300 mb-4">
+                            Solicitar Reserva
+                        </button>
+                        <div class="text-center text-sm text-gray-400">
+                            <i class="fas fa-info-circle mr-1"></i> O valor final será confirmado após análise
+                        </div>
+                    </div>
+                    
+                    <!-- Redes Sociais -->
+                    <div class="bg-gray-900 rounded-xl p-6">
+                        <h3 class="text-xl font-bold mb-4">Conecte-se com Luna</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700">
+                                <i class="fab fa-spotify text-xl"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700">
+                                <i class="fab fa-youtube text-xl"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700">
+                                <i class="fab fa-tiktok text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 px-10 border-t border-gray-800">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-red-600 font-bold text-xl mb-4">MUSICHUB</h4>
+                    <p class="text-gray-400">A plataforma líder para contratação de artistas musicais para todos os tipos de eventos.</p>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">NAVEGAÇÃO</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Início</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Artistas</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contratações</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Favoritos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">SUPORTE</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Central de Ajuda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Termos de Uso</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Política de Privacidade</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contato</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">REDES SOCIAIS</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>© 2023 MusicHub. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Funcionalidade das abas
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove a classe active de todos os botões e conteúdos
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Adiciona a classe active ao botão clicado
+                this.classList.add('active');
+                
+                // Mostra o conteúdo correspondente
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Atualização do preço
+        const formationSelect = document.querySelector('select:nth-of-type(1)');
+        const durationSelect = document.querySelector('select:nth-of-type(2)');
+        const totalElement = document.querySelector('.font-bold.text-xl');
+        
+        function updatePrice() {
+            let basePrice = 8500;
+            let additional = 0;
+            
+            if(formationSelect.value.includes("Banda")) {
+                additional += 3000;
+            }
+            
+            if(durationSelect.value.includes("2 horas")) {
+                additional += 1500;
+            } else if(durationSelect.value.includes("3 horas")) {
+                additional += 3000;
+            }
+            
+            totalElement.textContent = `R$ ${(basePrice + additional).toLocaleString('pt-BR')},00`;
+        }
+        
+        formationSelect.addEventListener('change', updatePrice);
+        durationSelect.addEventListener('change', updatePrice);
+    </script>
+</body>
+</html>

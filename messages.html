@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagens | MusicHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .messages-bg {
+            background: #141414;
+        }
+
+        .conversation-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .conversation-item.active {
+            background-color: rgba(229, 9, 20, 0.2);
+            border-left: 3px solid #e50914;
+        }
+
+        .message-input {
+            background-color: rgba(20, 20, 20, 0.8);
+            border: 1px solid #333;
+        }
+
+        .message-input:focus {
+            border-color: #e50914;
+        }
+
+        .message-sent {
+            background-color: rgba(229, 9, 20, 0.3);
+            border-radius: 18px 18px 0 18px;
+        }
+
+        .message-received {
+            background-color: rgba(50, 50, 50, 0.6);
+            border-radius: 18px 18px 18px 0;
+        }
+    </style>
+</head>
+
+<body class="messages-bg text-white">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-4 z-50 fixed w-full bg-gradient-to-b from-black to-transparent">
+        <div class="flex items-center">
+            <h1 class="text-red-600 font-bold text-3xl mr-10">MUSICHUB</h1>
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="#" class="hover:text-gray-300">Início</a></li>
+                <li><a href="#" class="hover:text-gray-300">Artistas</a></li>
+                <li><a href="#" class="hover:text-gray-300">Contratações</a></li>
+                <li><a href="#" class="hover:text-gray-300">Mensagens</a></li>
+            </ul>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="relative hidden md:block">
+                <input type="text" placeholder="Buscar artistas..."
+                    class="bg-black bg-opacity-70 border border-gray-700 rounded px-4 py-1 focus:outline-none focus:border-white w-40 lg:w-64">
+                <i class="fas fa-search absolute right-3 top-2 text-gray-400"></i>
+            </div>
+            <div class="flex items-center space-x-2">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Perfil" class="w-8 h-8 rounded-md">
+                <span class="hidden md:inline">Olá, Rafael</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="pt-20 pb-16 px-4 sm:px-10">
+        <div class="container mx-auto">
+            <h2 class="text-2xl font-bold mb-6">Mensagens</h2>
+
+            <div class="flex flex-col md:flex-row gap-6 h-[calc(100vh-180px)]">
+                <!-- Lista de Conversas -->
+                <div class="md:w-1/3 bg-gray-900 rounded-lg overflow-hidden flex flex-col">
+                    <div class="p-4 border-b border-gray-800">
+                        <div class="relative">
+                            <input type="text" placeholder="Buscar conversas..."
+                                class="w-full bg-gray-800 rounded py-2 px-4 pl-10 focus:outline-none focus:ring-1 focus:ring-red-600">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 overflow-y-auto">
+                        <!-- Conversa 1 -->
+                        <div
+                            class="conversation-item active flex items-center p-4 border-b border-gray-800 cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                                alt="Luna Santos" class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-bold">Luna Santos</h3>
+                                    <span class="text-xs text-gray-400">15:30</span>
+                                </div>
+                                <p class="text-sm text-gray-400 truncate">Ótimo! Podemos marcar para dia 15 às 20h?</p>
+                            </div>
+                        </div>
+
+                        <!-- Conversa 2 -->
+                        <div class="conversation-item flex items-center p-4 border-b border-gray-800 cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                                alt="Banda Rock Now" class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-bold">Banda Rock Now</h3>
+                                    <span class="text-xs text-gray-400">Ontem</span>
+                                </div>
+                                <p class="text-sm text-gray-400 truncate">Enviámos a proposta para seu evento
+                                    corporativo</p>
+                            </div>
+                        </div>
+
+                        <!-- Conversa 3 -->
+                        <div class="conversation-item flex items-center p-4 border-b border-gray-800 cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                                alt="DJ Electro" class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-bold">DJ Electro</h3>
+                                    <span class="text-xs text-gray-400">12/05</span>
+                                </div>
+                                <p class="text-sm text-gray-400 truncate">Precisamos confirmar o equipamento adicional
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Conversa 4 -->
+                        <div class="conversation-item flex items-center p-4 border-b border-gray-800 cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1496293455970-f8581aae0e3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2013&q=80"
+                                alt="Duo Raiz" class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-bold">Duo Raiz</h3>
+                                    <span class="text-xs text-gray-400">10/05</span>
+                                </div>
+                                <p class="text-sm text-gray-400 truncate">Obrigado pela contratação! Estamos ansiosos
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Área de Mensagens -->
+                <div class="md:w-2/3 bg-gray-900 rounded-lg overflow-hidden flex flex-col">
+                    <!-- Cabeçalho da Conversa -->
+                    <div class="flex items-center p-4 border-b border-gray-800">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                            alt="Luna Santos" class="w-10 h-10 rounded-full object-cover mr-3">
+                        <div>
+                            <h3 class="font-bold">Luna Santos</h3>
+                            <p class="text-xs text-gray-400">Online agora</p>
+                        </div>
+                        <div class="ml-auto flex space-x-2">
+                            <button
+                                class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700">
+                                <i class="fas fa-phone-alt text-sm"></i>
+                            </button>
+                            <button
+                                class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700">
+                                <i class="fas fa-video text-sm"></i>
+                            </button>
+                            <button
+                                class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700">
+                                <i class="fas fa-ellipsis-h text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Histórico de Mensagens -->
+                    <div class="flex-1 p-4 overflow-y-auto space-y-4">
+                        <!-- Mensagem recebida -->
+                        <div class="flex items-start">
+                            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                                alt="Luna Santos" class="w-8 h-8 rounded-full object-cover mr-3">
+                            <div>
+                                <div class="message-received px-4 py-2 max-w-xs md:max-w-md">
+                                    <p>Olá Rafael! Obrigada pelo interesse no meu trabalho. Como posso te ajudar?</p>
+                                </div>
+                                <span class="text-xs text-gray-400 mt-1 block">Luna Santos • 14:20</span>
+                            </div>
+                        </div>
+
+                        <!-- Mensagem enviada -->
+                        <div class="flex items-start justify-end">
+                            <div class="text-right">
+                                <div class="message-sent px-4 py-2 max-w-xs md:max-w-md ml-auto">
+                                    <p>Oi Luna! Estou organizando um casamento para dia 15/06 e adoraria te contratar
+                                        para o evento. Você está disponível?</p>
+                                </div>
+                                <span class="text-xs text-gray-400 mt-1 block">Você • 14:25</span>
+                            </div>
+                        </div>
+
+                        <!-- Mensagem recebida -->
+                        <div class="flex items-start">
+                            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                                alt="Luna Santos" class="w-8 h-8 rounded-full object-cover mr-3">
+                            <div>
+                                <div class="message-received px-4 py-2 max-w-xs md:max-w-md">
+                                    <p>Parabéns pelo casamento! Dia 15/06 estou disponível sim. O evento será em São
+                                        Paulo?</p>
+                                </div>
+                                <span class="text-xs text-gray-400 mt-1 block">Luna Santos • 14:28</span>
+                            </div>
+                        </div>
+
+                        <!-- Mensagem enviada -->
+                        <div class="flex items-start justify-end">
+                            <div class="text-right">
+                                <div class="message-sent px-4 py-2 max-w-xs md:max-w-md ml-auto">
+                                    <p>Isso mesmo! Será no Espaço Villa, na zona sul. Precisamos de um show de 2 horas,
+                                        das 20h às 22h. Qual seu valor para esse tipo de evento?</p>
+                                </div>
+                                <span class="text-xs text-gray-400 mt-1 block">Você • 14:30</span>
+                            </div>
+                        </div>
+
+                        <!-- Mensagem recebida -->
+                        <div class="flex items-start">
+                            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                                alt="Luna Santos" class="w-8 h-8 rounded-full object-cover mr-3">
+                            <div>
+                                <div class="message-received px-4 py-2 max-w-xs md:max-w-md">
+                                    <p>Para eventos em SP com 2 horas de show, meu valor é R$ 8.500. Isso inclui
+                                        equipamento de som básico e um técnico. Precisará de iluminação adicional?</p>
+                                </div>
+                                <span class="text-xs text-gray-400 mt-1 block">Luna Santos • 14:32</span>
+                            </div>
+                        </div>
+
+                        <!-- Mensagem enviada -->
+                        <div class="flex items-start justify-end">
+                            <div class="text-right">
+                                <div class="message-sent px-4 py-2 max-w-xs md:max-w-md ml-auto">
+                                    <p>O local já tem iluminação, então acredito que não será necessário. O valor está
+                                        dentro do nosso orçamento! Podemos seguir com a reserva?</p>
+                                </div>
+                                <span class="text-xs text-gray-400 mt-1 block">Você • 14:35</span>
+                            </div>
+                        </div>
+
+                        <!-- Mensagem recebida -->
+                        <div class="flex items-start">
+                            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                                alt="Luna Santos" class="w-8 h-8 rounded-full object-cover mr-3">
+                            <div>
+                                <div class="message-received px-4 py-2 max-w-xs md:max-w-md">
+                                    <p>Ótimo! Podemos marcar para dia 15 às 20h? Enviarei a proposta formal pelo
+                                        MusicHub com todos os detalhes para você revisar.</p>
+                                </div>
+                                <span class="text-xs text-gray-400 mt-1 block">Luna Santos • 14:37</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Área de Digitação -->
+                    <div class="p-4 border-t border-gray-800">
+                        <div class="flex items-center">
+                            <button
+                                class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 mr-2">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <input type="text" placeholder="Digite sua mensagem..."
+                                class="flex-1 message-input rounded-full py-2 px-4 focus:outline-none">
+                            <button
+                                class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 ml-2">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 px-10 border-t border-gray-800">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-red-600 font-bold text-xl mb-4">MUSICHUB</h4>
+                    <p class="text-gray-400">A plataforma líder para contratação de artistas musicais para todos os
+                        tipos de eventos.</p>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">NAVEGAÇÃO</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Início</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Artistas</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contratações</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Mensagens</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">SUPORTE</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Central de Ajuda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Termos de Uso</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Política de Privacidade</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contato</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">REDES SOCIAIS</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>© 2023 MusicHub. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Selecionar conversa
+        document.querySelectorAll('.conversation-item').forEach(item => {
+            item.addEventListener('click', function () {
+                document.querySelector('.conversation-item.active').classList.remove('active');
+                this.classList.add('active');
+
+                // Aqui você carregaria as mensagens da conversa selecionada
+                // Simulação: rolar para o final da área de mensagens
+                const messagesContainer = document.querySelector('.overflow-y-auto');
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            });
+        });
+
+        // Enviar mensagem ao pressionar Enter
+        const messageInput = document.querySelector('.message-input');
+        messageInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && this.value.trim() !== '') {
+                // Aqui você enviaria a mensagem
+                const messagesContainer = document.querySelector('.overflow-y-auto');
+
+                // Criar nova mensagem (simulação)
+                const newMessage = document.createElement('div');
+                newMessage.className = 'flex items-start justify-end';
+                newMessage.innerHTML = `
+                    <div class="text-right">
+                        <div class="message-sent px-4 py-2 max-w-xs md:max-w-md ml-auto">
+                            <p>${this.value}</p>
+                        </div>
+                        <span class="text-xs text-gray-400 mt-1 block">Você • Agora</span>
+                    </div>
+                `;
+
+                messagesContainer.appendChild(newMessage);
+                this.value = '';
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        });
+
+        // Rolar para o final das mensagens ao carregar
+        window.addEventListener('load', function () {
+            const messagesContainer = document.querySelector('.overflow-y-auto');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        });
+    </script>
+</body>
+
+</html>
